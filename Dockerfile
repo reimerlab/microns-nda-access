@@ -2,6 +2,10 @@ FROM python:3.8-buster
 
 # Base packages
 
+# Base packages
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list \
+ && apt-get -o Acquire::Check-Valid-Until=false update
+
 RUN apt-get update&& \
     apt-get -y install graphviz build-essential python-dev ffmpeg fish
     
