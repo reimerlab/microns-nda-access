@@ -1,15 +1,15 @@
-FROM python:3.8-buster
+FROM python:3.9
 
 # Base packages
 
 # Base packages
-RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list \
- && apt-get -o Acquire::Check-Valid-Until=false update
+#RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list \
+# && apt-get -o Acquire::Check-Valid-Until=false update
 
-RUN apt-get update&& \
-    apt-get -y install graphviz build-essential python-dev ffmpeg fish
+RUN apt-get update && \
+    apt-get -y install graphviz build-essential python3-dev ffmpeg fish
     
-RUN pip install --upgrade pip
+RUN pip3 install --upgrade pip
 
 # Install jupyter notebook
 RUN pip3 install jupyter jupyterlab
@@ -29,7 +29,7 @@ RUN git clone --depth 1 --branch v8 https://github.com/cajal/microns_phase3_nda
 RUN pip3 install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
 RUN pip3 install -e microns_phase3_nda/
 RUN pip3 install git+https://github.com/AllenInstitute/em_coregistration.git@phase3
-
+RUN pip3 uninstall caveclient && pip3 install caveclient>=8.0.0
 # Set up work environment
 WORKDIR /notebooks
 COPY README.md .
